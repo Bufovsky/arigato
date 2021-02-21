@@ -112,7 +112,6 @@ class User
             return $this->{$parametr};
         }
     }
-
     public function __set(string $parametr, string $value)
     {
         if (isset($this->{$parametr})) {
