@@ -74,7 +74,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         } else {
             $user = '';
         }
-
         return $this->render('user\create.html.twig', [
                 'name' => $user,
         ]);
