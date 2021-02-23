@@ -40,29 +40,35 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     /**
      * @route(path="/delete")
      */
-    public function delete(int $id, EntityManagerInterface $entityManager):void
+    public function delete(int $id, EntityManagerInterface $entityManager):Response
     {
         $entityManager->remove($id);
         $entityManager->flush();
+
+        return new Response("Usunięto prawidłowo użytkownika.");
     }
 
     /**
      * @route(path="/edit")
      */
-    public function edit(int $id, EntityManagerInterface $entityManager):void
+    public function edit(int $id, Request $request, EntityManagerInterface $entityManager):mixed
     {
-        $user = $this->getDoctrine()->getRepository(User::class)->find($id);
-        $user->setLogin('login2');
-        $user->setPassword('password2');
-        $user->setEmail('email2');
-        $entityManager->persist($user);
-        $entityManager->flush();
+        if ('POST' === $request->getMethod()) {
+            $user = $this->getDoctrine()->getRepository(User::class)->find($id);
+            $user->setLogin($request->get('login'));
+            $user->setPassword($request->get('password'));
+            $user->setEmail($request->get('email'));
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            return new Response("Zedytowano prawidłowo użytkownika.");
+        }
     }
 
     /**
      * @route(path="/create")
      */
-    public function create(Request $request, EntityManagerInterface $entityManager):Response
+    public function create(Request $request, EntityManagerInterface $entityManager):mixed
     {
         if ('POST' === $request->getMethod()) {
             $user = new User();
@@ -71,11 +77,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
             $user->setEmail($request->get('email'));
             $entityManager->persist($user);
             $entityManager->flush();
-        } else {
-            $user = '';
+
+            return new Response("Utworzono prawidłowo użytkownika.");
         }
-        return $this->render('user\create.html.twig', [
-                'name' => $user,
-        ]);
     }
  }

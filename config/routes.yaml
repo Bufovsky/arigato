@@ -1,3 +1,19 @@
 parameter:
     path: /
+    controller: App\Controller\UserModel::index
+
+parameter:
+    path: /show
+    controller: App\Controller\UserController::show
+
+parameter:
+    path: /delete
+    controller: App\Controller\UserController::delete
+
+parameter:
+    path: /edit
+    controller: App\Controller\UserController::edit
+
+parameter:
+    path: /create
     controller: App\Controller\UserController::create
