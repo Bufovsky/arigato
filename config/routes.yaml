@@ -17,3 +17,4 @@ parameter:
 parameter:
     path: /create
     controller: App\Controller\UserController::create
+    

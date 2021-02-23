@@ -13,7 +13,6 @@ class UserModel
 
     /**
      * Funkcja tworząca nowego użytkownika ustawiająca wartości do objektu
-
      * @param login Account login
      * @param password Account password
      * @param email Account email
