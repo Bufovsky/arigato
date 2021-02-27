@@ -38,17 +38,6 @@ class User
      */
     private $email;
 
-    public function create(string $id = null, string $login = null, string $password = null, string $email = null)
-    {
-        $names = get_defined_vars();
-        $params = func_get_args();
-        $i = 0;
-
-        foreach ($names as $key => $values) {
-            $this->{$key} = $params[$i++];
-        }
-    }
-
      /**
      * @param login string 
      */
@@ -104,20 +93,4 @@ class User
     {
         return $this->email;
     }
-
-    /*
-    public function __get(string $parametr)
-    {
-        if (isset($this->{$parametr})) {
-            return $this->{$parametr};
-        }
-    }
-
-    public function __set(string $parametr, string $value)
-    {
-        if (isset($this->{$parametr})) {
-            $this->{$parametr} = $value;
-        }
-    }
-    */
 }
