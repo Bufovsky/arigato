@@ -26,14 +26,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         $user = $this->getDoctrine()->getRepository(User::class)->find($id);
 
         if (!$user) {
-            throw $this->createNotFoundException(
-                'No users found for id '.$id
-            );
+            $response = new Response(json_encode(array('error' => 'Account not found.')));
+            $response->headers->set('Content-Type', 'application/json');
         } else {
-            return new Response(
-                sprintf("%s | %s | %s </br>", $user->__get('login'), $user->__get('password'), $user->__get('email'))
-            );
+            $items = ['login', 'password', 'email'];
+
+            foreach ($items as $item)
+                $items[$item] = $user->__get($item);
+
+            $response = new Response(json_encode($items));
         }
+
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
     }
 
     /**
@@ -44,7 +49,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         $entityManager->remove($id);
         $entityManager->flush();
 
-        return new Response("Usunięto prawidłowo użytkownika.");
+        //chceck if not exist
+        $response = new Response(json_encode(array('error' => 'Account removed correctly.')));
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
     }
 
     /**
@@ -60,7 +68,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
             $entityManager->persist($user);
             $entityManager->flush();
 
-            return new Response("Zedytowano prawidłowo użytkownika.");
+            //chceck if edited
+            $response = new Response(json_encode(array('error' => 'Account actualization complete correctly.')));
+            $response->headers->set('Content-Type', 'application/json');
+            return $response;
         }
     }
 
@@ -77,7 +88,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
             $entityManager->persist($user);
             $entityManager->flush();
 
-            return new Response("Utworzono prawidłowo użytkownika.");
+            //chceck if edited
+            $response = new Response(json_encode(array('error' => 'Account created correctly.')));
+            $response->headers->set('Content-Type', 'application/json');
+            return $response;
         }
     }
  }
