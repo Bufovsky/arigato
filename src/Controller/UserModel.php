@@ -42,7 +42,7 @@ class UserModel
 
     /**
      * Widok ustawiania parametrów
-     * @param Wartości inputu
+     * @param email Wstaw email
      */
     public function emailValidation(string $email) {
         $this->email = filter_var($email, FILTER_VALIDATE_EMAIL) ? $email : 'uncorrect';
@@ -76,7 +76,7 @@ class UserModel
 
     /**
      * Widok Wyświetlania parametrów
-     * @param Wartości inputu
+     * @param params Wartości inputu
      */
     public function getParametersAssertTest(array $params) {
         foreach ($this->avalableParams as &$param)
